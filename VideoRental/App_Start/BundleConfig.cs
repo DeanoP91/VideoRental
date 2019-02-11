@@ -24,6 +24,7 @@ namespace VideoRental
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/agency.css",
                       "~/Content/site.css"));
         }
     }
