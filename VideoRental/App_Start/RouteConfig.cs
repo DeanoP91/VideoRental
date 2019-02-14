@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.UI.WebControls;
 
 namespace VideoRental
 {
@@ -12,6 +13,17 @@ namespace VideoRental
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapMvcAttributeRoutes();
+
+            // Convention based custom Route. New method is Attribute based custom route
+            /*
+            routes.MapRoute(
+                "MoviesByReleaseDate",
+                "movie/released/{year}/{month}",
+                new { controller = "Movie", action = "ByReleaseDate"},
+                new { year = @"\d{4}", month = @"\d{2}"});
+            */
 
             routes.MapRoute(
                 name: "Default",
