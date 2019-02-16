@@ -69,19 +69,11 @@ namespace VideoRental.Controllers
             return Content("id = " + id);
         }
 
-        public ActionResult Index(int? pageIndex, string sortBy)
+        public ActionResult Index()
         {
-            if (!pageIndex.HasValue)
-            {
-                pageIndex = 1;
-            }
-
-            if (string.IsNullOrWhiteSpace(sortBy))
-            {
-                sortBy = "Name";
-            }
+            var movie = GetMovies();
             
-            return Content(string.Format($"pageIndex={pageIndex}&sortBy={sortBy}"));
+            return View(movie);
         }
 
         // Implements the Attribute route
@@ -91,6 +83,16 @@ namespace VideoRental.Controllers
         public ActionResult ByReleaseDate(int year, int months)
         {
             return Content($"{year} / {months}");
+        }
+
+        private IEnumerable<Movie> GetMovies()
+        {
+            return new List<Movie>
+            {
+                new Movie { Id = 1, Name = "Shaun of the Dead" },
+                new Movie { Id = 2, Name = "The Matrix" },
+                new Movie { Id = 3, Name = "Love Actually" }
+            };
         }
     }
 }
