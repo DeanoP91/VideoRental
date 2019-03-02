@@ -22,3 +22,12 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.table-auto {
+    table-layout: auto;
+    width: auto;
+}
+
+.pad-right {
+    padding-right: 100px !important;
+}
