@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<VideoRentalApp.Models.Customer>
+@*Model uses IEnumerable rather than List since we only need to iterate over the list and don't need the other functionality in List.
+    If the List is replaced with a different data structure (provided it is enumerable) then it will still work.*@
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,6 +17,7 @@ else
         <thead>
         <tr>
             <th>Customer</th>
+            <th>Discount Rate</th>
         </tr>
         </thead>
         <tbody>
@@ -21,6 +25,7 @@ else
         {
             <tr>
                 <td>@Html.ActionLink(customer.Name, "Details", "Customer", new {id = customer.Id}, null)</td>
+                <td>@customer.MembershipType.DiscountRate%</td>
             </tr>
         }
         </tbody>
