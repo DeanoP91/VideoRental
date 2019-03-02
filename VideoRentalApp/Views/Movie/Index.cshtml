@@ -4,27 +4,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (!Model.Any())
-{
-    <p>It appears we don't have any movies..!</p>
-}
-else
-{
-    <table class="table table-bordered table-hover table-auto">
-        <thead>
-            <tr>
-                <th>Movies</th>
-            </tr>
-        </thead>
-        <tbody>
+<h2>Movies</h2>
+<table class="table table-bordered table-hover table-auto">
+    <thead>
+        <tr>
+            <th>Movie</th>
+            <th>Genre</th>
+        </tr>
+    </thead>
+    <tbody>
         @foreach (var movie in Model)
         {
             <tr>
-                <td class="pad-right">@movie.Name</td>
+                <td class="pad-right">@Html.ActionLink(movie.Name, "Details", "Movie", null)</td>
+                <td class="pad-right">@movie.Genre.Name</td>
             </tr>
         }
-        </tbody>
-    </table>
-}
-
-
+    </tbody>
+</table>

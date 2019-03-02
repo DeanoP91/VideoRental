@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -7,10 +8,22 @@ using System.Web.WebPages;
 using VideoRentalApp.Models;
 using VideoRentalApp.ViewModels;
 
-namespace VideoRental.Controllers
+namespace VideoRentalApp.Controllers
 {
     public class MovieController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public MovieController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
         // GET: Movie
         // Return type is ActionResult as it is generic but could be specific as ViewResult
         // public ViewResult Random()
@@ -71,8 +84,20 @@ namespace VideoRental.Controllers
 
         public ActionResult Index()
         {
-            var movie = GetMovies();
+            var movie = _context.Movies.Include(m => m.Genre).ToList();
             
+            return View(movie);
+        }
+
+        public ActionResult Details(int id)
+        {
+            var movie = _context.Movies.Include(m => m.Genre).SingleOrDefault(m => id == m.Id);
+
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+
             return View(movie);
         }
 
