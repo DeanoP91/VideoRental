@@ -13,7 +13,7 @@ namespace VideoRentalApp.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201903020911334_AddNameToMembershipType"; }
+            get { return "201903020922366_AddNameToMembershipType"; }
         }
         
         string IMigrationMetadata.Source
