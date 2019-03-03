@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using VideoRentalApp.Models;
+using VideoRentalApp.ViewModels;
 
 namespace VideoRentalApp.Controllers
 {
@@ -18,6 +19,17 @@ namespace VideoRentalApp.Controllers
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
+        }
+
+        public ActionResult New()
+        {
+            var membershipTypes = _context.MembershipTypes.ToList();
+            var viewModel = new NewCustomerViewModel()
+            {
+                MembershipTypes = membershipTypes
+            };
+
+            return View(viewModel);
         }
 
         // GET: Customer
@@ -42,6 +54,14 @@ namespace VideoRentalApp.Controllers
             }
 
             return View(customer);
+        }
+
+        [HttpPost]
+        public ActionResult Create(NewCustomerViewModel viewModel)
+        {
+
+
+            return View();
         }
     }
 }
