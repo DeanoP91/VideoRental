@@ -56,12 +56,32 @@ namespace VideoRentalApp.Controllers
             return View(customer);
         }
 
+        // Form returns NewCustomerViewModel from Model type but only contains Customer so can be more specific
         [HttpPost]
-        public ActionResult Create(NewCustomerViewModel viewModel)
+        public ActionResult Create(Customer customer)
         {
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
 
+            return RedirectToAction("Index", "Customer");
+        }
 
-            return View();
+        public ActionResult Edit(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+
+            var viewModel = new NewCustomerViewModel()
+            {
+                Customer = customer,
+                MembershipTypes = _context.MembershipTypes.ToList()
+            };
+
+            return View("New", viewModel);
         }
     }
 }

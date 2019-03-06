@@ -31,3 +31,13 @@ textarea {
 .pad-right {
     padding-right: 100px !important;
 }
+
+#add-btn {
+    margin-bottom: 18px;
+}
+
+.drop-shadow {
+    -webkit-box-shadow: 2px 2px 14px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px 2px 14px -1px rgba(0,0,0,0.75);
+    box-shadow: 2px 2px 14px -1px rgba(0,0,0,0.75);
+}
