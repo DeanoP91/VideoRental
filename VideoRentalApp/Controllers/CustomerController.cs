@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using VideoRentalApp.Models;
@@ -24,12 +23,12 @@ namespace VideoRentalApp.Controllers
         public ActionResult New()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
-            var viewModel = new NewCustomerViewModel()
+            var viewModel = new CustomerFormViewModel()
             {
                 MembershipTypes = membershipTypes
             };
 
-            return View(viewModel);
+            return View("CustomerForm", viewModel);
         }
 
         // GET: Customer
@@ -56,11 +55,25 @@ namespace VideoRentalApp.Controllers
             return View(customer);
         }
 
-        // Form returns NewCustomerViewModel from Model type but only contains Customer so can be more specific
+        // Form returns CustomerFormViewModel from Model type but only contains Customer so can be more specific
         [HttpPost]
-        public ActionResult Create(Customer customer)
+        public ActionResult Save(Customer customer)
         {
-            _context.Customers.Add(customer);
+            if (customer.Id == 0)
+            {
+                _context.Customers.Add(customer);
+            }
+            else
+            {
+                var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
+                // Microsoft preferred approach
+                // TryUpdateModel(customerInDb);
+                customerInDb.Name = customer.Name;
+                customerInDb.BirthDate = customer.BirthDate;
+                customerInDb.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+                customerInDb.MembershipTypeId = customer.MembershipTypeId;
+            }
+            
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Customer");
@@ -75,13 +88,13 @@ namespace VideoRentalApp.Controllers
                 return HttpNotFound();
             }
 
-            var viewModel = new NewCustomerViewModel()
+            var viewModel = new CustomerFormViewModel()
             {
                 Customer = customer,
                 MembershipTypes = _context.MembershipTypes.ToList()
             };
-
-            return View("New", viewModel);
+            
+            return View("CustomerForm", viewModel);
         }
     }
 }
