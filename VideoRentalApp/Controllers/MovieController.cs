@@ -119,5 +119,16 @@ namespace VideoRentalApp.Controllers
                 new Movie { Id = 3, Name = "Love Actually" }
             };
         }
+
+        public ActionResult New()
+        {
+            var genres = _context.Genres.ToList();
+            var viewModel = new MovieFormViewModel()
+            {
+                Genres = genres
+            };
+
+            return View("MovieForm", viewModel);
+        }
     }
 }
